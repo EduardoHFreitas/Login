@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Table(name = "usuario", schema = "webapp")
+@Table(name = "usuario", schema = "public")
 @Entity
 public class Usuario implements Serializable {
 
@@ -26,8 +26,8 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_id_usuario")
-	@SequenceGenerator(name = "seq_id_usuario", sequenceName = "seq_id_usuario")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idUsuario")
+	@SequenceGenerator(name = "idUsuario", sequenceName = "idUsuario")
 	@Column(name = "idUsuario")
 	private Long idUsuario;
 

@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.company.login.dto.UsuarioDTO;
@@ -16,6 +18,8 @@ import com.company.login.dto.UsuarioSecurityDTO;
 import com.company.login.entity.Usuario;
 import com.company.login.repository.UsuarioRepository;
 
+@Service
+@Transactional
 public class UsuarioService implements UserDetailsService {
 
 	@Autowired
