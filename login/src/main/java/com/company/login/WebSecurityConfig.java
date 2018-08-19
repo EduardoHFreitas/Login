@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.company.login.service.UsuarioService;
+import com.company.login.service.MainService;
 
 @Configuration
 @EnableWebSecurity
@@ -17,19 +17,16 @@ import com.company.login.service.UsuarioService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UsuarioService usuarioRepositoryImpl;
+	private MainService usuarioRepositoryImpl;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-				.antMatchers("/usuario/cadastro").permitAll()
-				.antMatchers("/home").authenticated().anyRequest().authenticated().and().formLogin()
-				.loginPage("/").defaultSuccessUrl("/home", true).permitAll() 
-				.and()
-				.logout().logoutSuccessUrl("/").logoutUrl("/logout").permitAll();
+				.antMatchers("/").permitAll()
+				.and().formLogin()
+				.loginPage("/").defaultSuccessUrl("/home", true).permitAll(); 
 
-		http.exceptionHandling().accessDeniedPage("/acessoNegado");
 		http.authorizeRequests().antMatchers("/resources/**").permitAll().anyRequest().permitAll();
 	}
 
@@ -37,11 +34,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(usuarioRepositoryImpl).passwordEncoder(new BCryptPasswordEncoder());
 	}
-	
-	/*
-	 * CRIPTOGRAFANDO A SENHA PARA TESTE public static void main(String[] args) {
-	 * 
-	 * System.out.println(new BCryptPasswordEncoder().encode("admin")); }
-	 */
-
 }

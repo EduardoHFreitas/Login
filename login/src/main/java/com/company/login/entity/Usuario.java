@@ -26,10 +26,10 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idUsuario")
-	@SequenceGenerator(name = "idUsuario", sequenceName = "idUsuario")
-	@Column(name = "idUsuario")
-	private Long idUsuario;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_usuario")
+	@SequenceGenerator(name = "id_usuario", sequenceName = "id_usuario")
+	@Column(name = "id_usuario")
+	private Long id_usuario;
 
 	@Column(name = "login")
 	private String login;
@@ -38,11 +38,11 @@ public class Usuario implements Serializable {
 	private String senha;
 
 	public Long getIdUsuario() {
-		return idUsuario;
+		return id_usuario;
 	}
 
 	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+		this.id_usuario = idUsuario;
 	}
 
 	public String getLogin() {

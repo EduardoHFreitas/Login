@@ -1,8 +1,8 @@
-package com.company.login.dto;
+package com.company.login.model;
 
 import javax.validation.constraints.NotNull;
 
-public class UsuarioDTO {
+public class UsuarioModel {
 
 	private Long idUsuario;
 
@@ -12,11 +12,14 @@ public class UsuarioDTO {
 	@NotNull(message = "A Senha é de preenchimento obrigatório.")
 	private String senha;
 
-	public UsuarioDTO() {
+	@NotNull(message = "A Confirmação de Senha é de preenchimento obrigatório.")
+	private String confirmarSenha;
+
+	public UsuarioModel() {
 
 	}
 
-	public UsuarioDTO(String login, String senha) {
+	public UsuarioModel(String login, String senha) {
 		this.login = login;
 		this.senha = senha;
 	}
@@ -43,6 +46,14 @@ public class UsuarioDTO {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getConfirmarSenha() {
+		return confirmarSenha;
+	}
+
+	public void setConfirmarSenha(String confirmarSenha) {
+		this.confirmarSenha = confirmarSenha;
 	}
 
 }
