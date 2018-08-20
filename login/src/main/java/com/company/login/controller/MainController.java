@@ -2,12 +2,9 @@ package com.company.login.controller;
 
 import java.util.Random;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,19 +34,12 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView salvarUsuario(@ModelAttribute @Valid UsuarioModel usuarioModel, final BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+	public ModelAndView salvarUsuario(@ModelAttribute UsuarioModel usuarioModel, Model model, RedirectAttributes redirectAttributes) {
 
 		validar(usuarioModel);
 				
-		if (result.hasErrors()) {
-			model.addAttribute("UsuarioDTO", usuarioModel);
-
-			return index(usuarioModel);
-		} else {
-			usuarioService.salvarUsuario(usuarioModel);
-		}
+		usuarioService.salvarUsuario(usuarioModel);
 			
-
 		ModelAndView modelAndView = new ModelAndView("redirect:/index");
 
 		redirectAttributes.addFlashAttribute("sucesso", "Usuário criado com sucesso!");
