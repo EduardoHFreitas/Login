@@ -15,6 +15,7 @@ import com.company.login.entity.Usuario;
 import com.company.login.model.UsuarioModel;
 import com.company.login.repository.MainRepository;
 import com.company.login.service.MainService;
+import com.company.login.validator.ValidadorUsuario;
 
 @Controller
 @RequestMapping("/") 
@@ -25,7 +26,9 @@ public class MainController {
 
 	@Autowired
 	private MainRepository mainRepository;
-		
+	
+	ValidadorUsuario validadorUsuarioModel = new ValidadorUsuario();
+	
 	@RequestMapping(value="/", method= RequestMethod.GET)	
 	public ModelAndView index(UsuarioModel usuarioModel){
 		ModelAndView mv = new ModelAndView("index");
@@ -35,8 +38,10 @@ public class MainController {
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView salvarUsuario(@ModelAttribute UsuarioModel usuarioModel, Model model, RedirectAttributes redirectAttributes) {
+		
+		validarLoginJaExistente(usuarioModel.getLogin());
 
-		validar(usuarioModel);
+		validadorUsuarioModel.validar(usuarioModel);
 				
 		usuarioService.salvarUsuario(usuarioModel);
 			
@@ -46,37 +51,13 @@ public class MainController {
 
 		return modelAndView;
 	}
-
-	private void validar(UsuarioModel usuarioModel) {
-		validarUsuario(usuarioModel.getLogin());
-		validarSenha(usuarioModel.getSenha());
-		validarConfirmacaoSenha(usuarioModel);
-	}
-
-	private void validarConfirmacaoSenha(UsuarioModel usuarioModel) {
-		if (!usuarioModel.getSenha().equals(usuarioModel.getConfirmarSenha())) {
-			throw new RuntimeException("A Senhas informadas não coincidem!");
-		}
-	}
-
-	private void validarUsuario(String login) {
-		if (login == null || login.isEmpty()) {
-			throw new RuntimeException("O Usuário deve ser informado!");
-		}
-		
-		if (login.length() < 8 || login.length() > 16) {
-			throw new RuntimeException("O Usuário deve possuir no mínimo 8 caracteres e no máximo 16 caracteres! \n Seu Usuário possui " + login.length() + " caracteres.");
-		}
-		
-		if (!login.matches("[A-Za-z0-9^@_]{8,16}")) {
-			throw new RuntimeException("O campo de Usuário contém caracteres inválidos!");
-		}
-		
+	
+	private void validarLoginJaExistente(String login) {
 		Usuario usuario = mainRepository.findByLogin(login);
 		
 		if (usuario != null) {
 			String usuarioSugerido = getSugestaoUsuario(login);
-			throw new RuntimeException("Usuário já cadastrado! \n Você poderia usar: " + usuarioSugerido);
+			throw new RuntimeException("Login já cadastrado! \n Você poderia usar: " + usuarioSugerido);
 		}
 	}
 
@@ -90,20 +71,6 @@ public class MainController {
 		} while (usuario != null);
 		
 		return loginSugerido;
-	}
-
-	private void validarSenha(String senha) {
-		if (senha == null || senha.isEmpty()) {
-			throw new RuntimeException("A Senha deve ser informada!");
-		}
-		
-		if (senha.length() < 8 || senha.length() > 16) {
-			throw new RuntimeException("A Senha deve possuir no mínimo 8 caracteres e no máximo 16 caracteres! \n Sua Senha possui " + senha.length() + " caracteres.");
-		}
-		
-		if (!senha.matches("[A-Za-z0-9^@!#$%&*]{8,16}")) {
-			throw new RuntimeException("O campo de Senha contém caracteres inválidos!");
-		}
 	}
 
 }
