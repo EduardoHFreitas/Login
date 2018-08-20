@@ -26,9 +26,13 @@
                      <h2 class="mdl-card__title-text">LOGIN</h2>
                   </div>
                   <div class="mdl-card__supporting-text">
-                     <span th:if="${param.error}">
-                     	<span style='color: red' th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
-                     </span>
+                     <div class="alert alert-succes" th:text="${sucesso}" th:if="${not #strings.isEmpty(sucesso)}"></div>
+                     <div class="alert alert-succes" th:text="${error}" th:if="${not #strings.isEmpty(error)}"></div>
+                     <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                         <div th:each="detailedError : ${#fields.detailedErrors()}">
+                         	<span th:text="${detailedError.message}"></span>
+                         </div>
+                     </div>
                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="input-usuario" name="login"/>
                        	<label class="mdl-textfield__label" for="input-usuario">Login</label>

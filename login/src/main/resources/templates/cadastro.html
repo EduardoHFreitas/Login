@@ -32,14 +32,14 @@
                               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                  <input class="mdl-textfield__input" type="text" id="input-login" th:field="*{login}"/>
                                  <label class="mdl-textfield__label" for="input-login">Login</label>
-                                 <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="erro-msg">...</p>
+                                 <p th:if="${#fields.errors('login')}" th:errors="*{login}" class="erro-msg">...</p>
                               </div>
                            </li>
                            <li class="mdl-list__item">
                               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                  <input class="mdl-textfield__input" type="password" id="input-senha" th:field="*{senha}"/>
                                  <label class="mdl-textfield__label" for="input-senha">Senha</label>
-                                 <p th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="erro-msg">...</p>
+                                 <p th:if="${#fields.errors('senha')}" th:errors="*{senha}" class="erro-msg">...</p>
                               </div>
                            </li>
                         </ul>
