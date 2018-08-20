@@ -50,7 +50,10 @@ public class MainController {
 	private void validar(UsuarioModel usuarioModel) {
 		validarUsuario(usuarioModel.getLogin());
 		validarSenha(usuarioModel.getSenha());
-		
+		validarConfirmacaoSenha(usuarioModel);
+	}
+
+	private void validarConfirmacaoSenha(UsuarioModel usuarioModel) {
 		if (!usuarioModel.getSenha().equals(usuarioModel.getConfirmarSenha())) {
 			throw new RuntimeException("A Senhas informadas não coincidem!");
 		}
